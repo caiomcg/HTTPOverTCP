@@ -1,0 +1,7 @@
+langauge: cpp
+sudo: required
+dist: trusty
+
+script:
+  - cd debug
+  - make all
