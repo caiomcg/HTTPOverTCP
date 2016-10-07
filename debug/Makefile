@@ -3,4 +3,4 @@ CFLAGS = -std=c++11
 
 
 all:
-	$(CC) $(CFLAGS) ../src/test.cpp -o test
+	$(CC) $(CFLAGS) ../src/HTTP.cpp ../src/main.cpp -o main
