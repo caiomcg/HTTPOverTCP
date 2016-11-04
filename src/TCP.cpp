@@ -1,6 +1,6 @@
 #include "../include/TCP.h"
 
-TCP::TCP(SocketFamily family, SocketUser user, int port)  : user(user), serverFileDescriptor(0), clientFileDescriptor(0) {
+TCP::TCP(SocketFamily family, SocketUser user, const int port, const int maxClient)  : user(user), serverFileDescriptor(0), clientFileDescriptor(0), backlog(maxClient), clientSize(0) {
 	if (!createSocket(family, user)) {
 			throw TCPError("Socket Creation Error.");
 	}
@@ -11,8 +11,6 @@ TCP::TCP(SocketFamily family, SocketUser user, int port)  : user(user), serverFi
 	address->sin_family = (family == SocketFamily::IPV4 ? AF_INET : AF_INET6);
     address->sin_port   = htons(port);
     address->sin_addr.s_addr = INADDR_ANY;
-
-    slen = sizeof(*address);
 
 	if (user == SocketUser::SERVER) {
 		if (!bindSocket()) {
@@ -39,17 +37,19 @@ int TCP::bindSocket() {
 	return 1;
 }
 
+int TCP::listenTo() {
+	if (user == SocketUser::CLIENT) {
+		Utils::verbose("DEBUG", "Cannot listen. The user is a client.");
+		return -1;
+	} 
+	return listen(serverFileDescriptor, backlog);
+	
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+int TCP::acceptConnection() {
+	if (user == SocketUser::CLIENT) {
+		Utils::verbose("DEBUG", "Cannot accept connection. The user is a client.");
+		return -1;
+	} 
+ 	return accept(serverFileDescriptor, (struct sockaddr*) &clientFileDescriptor, &clientSize);
+}

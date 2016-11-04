@@ -13,6 +13,7 @@
 #include <cstring>
 
 #include "../include/TCPError.h"
+#include "../include/Utils.h"
 
 typedef int(*CallbackFuction)(char* data, int size, int error);
 
@@ -33,16 +34,24 @@ private:
 	int serverFileDescriptor;
 	int clientFileDescriptor;
 
+	int backlog;
+
+	socklen_t clientSize;
+
 	struct sockaddr_in serverAddress;
 	struct sockaddr_in clientAddress;
 
-	socklen_t slen;
-
-	int createSocket(SocketFamily family, SocketUser user);
+	int createSocket(const SocketFamily family, const SocketUser user);
 	int bindSocket();
 public:
-	TCP(SocketFamily family, SocketUser user, int port = 5000);
+	TCP(const SocketFamily family, SocketUser user, const int port = 5000, const int maxClient = 10);
 	~TCP();
+
+	int listenTo();
+
+	int acceptConnection();
+
+	int close(const int identifier);
 };
 
 #endif // define TCP_H
