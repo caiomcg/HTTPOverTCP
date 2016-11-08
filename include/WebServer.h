@@ -14,6 +14,7 @@ private:
 
 	bool keepListening;
 	int newClient;
+
 public:
 	WebServer(const std::string serverName, const int port = 5000);
 	~WebServer();

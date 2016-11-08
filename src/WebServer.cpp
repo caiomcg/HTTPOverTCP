@@ -32,21 +32,33 @@ void WebServer::run() {
 
 void WebServer::prepareClient(const int client) {
 	uint8_t* buffer = new uint8_t[65535];
+	HTTP* http = new HTTP();
+
 	int response = 0;
 
-	if((response = TCP::receivedata(client, buffer, 65535)) >= 0) {
+	if ((response = TCP::receivedata(client, buffer, 65535)) >= 0) {
 		Utils::verbose("DEBUG", "Text received");
-		std::clog << buffer << std::endl;
+		std::cout << (char*)buffer << std::endl;
+		std::string endpoint = http->processMessage(buffer);
+		if (!endpoint.empty()) {
+			std::string responseHeader = http->createResponseHeader(1, endpoint, SUCCESS::OK);
+			TCP::sendData(client, (uint8_t*)responseHeader.c_str(), responseHeader.length());
+		}
 	} else {
 		Utils::verbose("ERROR", "Could not receive data.");
 	}
 	
-	//PROCESS
-	//GET DATA
-	//
-	//PROCESS
-	//
-	//
+	if (!TCP::closeWithIdentifier(client)) {
+		Utils::verbose("ERROR", "Failed to close client socket");
+	} else {
+		Utils::verbose("DEBUG", "Closed the socket");
+	}
 
-	delete [] buffer;
+
+	if (buffer != nullptr) {
+		delete [] buffer;
+	}
+	if (http != nullptr) {
+		delete http;
+	}
 }	

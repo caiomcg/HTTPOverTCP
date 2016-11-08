@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
+#include <unistd.h>
 //---------------------------------------------------------------------------------------------
 
 //C Headers
@@ -62,23 +63,14 @@ public:
 	~TCP();
 
 	int listenTo();
-
 	int acceptConnection();
 
-	int close(const int identifier);
-
+	bool closeSocket();
 	int getPort() const;
 
+	static bool closeWithIdentifier(const int identifier = -1);
 	static int receivedata(const int socketDescriptor, uint8_t* buffer, const size_t bufferLength, const unsigned int timeout = 10);
+	static int sendData(const int socketDescriptor, const uint8_t* buffer, const size_t bufferLength);
 };
 
 #endif // define TCP_H
-
-
-
-
-
-
-
-
-

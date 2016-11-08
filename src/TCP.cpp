@@ -60,19 +60,47 @@ int TCP::acceptConnection() {
  	return accept(serverFileDescriptor, (struct sockaddr*) &clientFileDescriptor, &clientSize);
 }
 
+bool TCP::closeSocket() {
+	int response = 0;
+	if ((response = closeWithIdentifier((user == SocketUser::CLIENT ? clientFileDescriptor : serverFileDescriptor))) < 0) {
+		Utils::verbose("ERROR", "Could not close socket");
+		return false;
+	}
+	return true;
+}
+
 int TCP::getPort() const {
 	return port;
 }
 
+bool TCP::closeWithIdentifier(const int identifier){
+	int response = 0;
+	if ((response = close(identifier)) < 0) {
+		Utils::verbose("ERROR", "Could not close socket");
+		return false;
+	}
+	return true;
+}
+
 int TCP::receivedata(const int socketDescriptor, uint8_t* buffer, const size_t bufferLength, const unsigned int timeout) {  
-	//if (timeout > 0) {
-	//	struct timeval tv;
-	//	
-	//    tv.tv_sec  = timeout;
-	//    tv.tv_usec = 0;
-//
-//	//    setsockopt(socketDescriptor, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
-	//}
+	if (timeout > 0) {
+		struct timeval tv;
+		
+	    tv.tv_sec  = timeout;
+	    tv.tv_usec = 0;
+
+	    setsockopt(socketDescriptor, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
+	}
 
 	return recv(socketDescriptor, buffer, bufferLength, 0);
+}
+
+int TCP::sendData(const int socketDescriptor, const uint8_t* buffer, const size_t bufferLength) {
+	int response = 0;
+
+	if ((response = send(socketDescriptor, buffer, bufferLength, 0)) < 0) {
+		Utils::verbose("ERROR", "Failed to send " + std::to_string(bufferLength) + " bytes of data");
+	}
+
+	return response;
 }
