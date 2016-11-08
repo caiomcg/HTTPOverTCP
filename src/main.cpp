@@ -1,33 +1,33 @@
-#include <iostream>
-#include <new>
-#include "../include/HTTP.h"
-#include "../include/TCP.h"
-#include "../include/Utils.h"
+#include "../include/WebServer.h"
+#include <signal.h>
 
-int main(void) {
-	TCP* tcp = new TCP(SocketFamily::IPV4, SocketUser::SERVER, 5000);
-	bool keepListening = true;
-	int client = 0;
+void usage(void) {
+	std::cout << "\033[1;37mNAME\033[0m" << std::endl;
+    std::cout << "        WebServer - A simple C++ HTTP server." << std::endl;
+	std::cout << "\033[1;37mSYNOPSIS\033[0m" << std::endl;
+    std::cout << "        WebServer [SERVER_PORT]" << std::endl;
+    std::cout << "\033[1;37mEXIT STATUS\033[0m" << std::endl;
+    std::cout << "        0 - If ok" << std::endl;
+    std::cout << "        1 - If a problem occured" << std::endl;
+    std::cout << "\033[1;37mUSE EXAMPLE\033[0m" << std::endl;
+    std::cout << "        \033[0;35m./WebServer 8080\033[0m" << std::endl;
+}
 
-	uint8_t* buffer = new uint8_t[200];
+int main(int argc, char** argv) {
+	WebServer* server = nullptr;
 
-	if (!tcp->listenTo()) {
-		Utils::verbose("INFO", "Socket is listening");
-
-		while (keepListening) {
-			if ((client = tcp->acceptConnection()) >= 0) {
-				Utils::verbose("INFO", "Accepted connection");
-				int r = recv(client, buffer, 200, 0);
-				Utils::verbose("INFO", "Received message: ");
-				std::clog << buffer << std::endl;
-			}
-		}
-
-	} else {
-		Utils::verbose("ERROR", "Failed to listen for connections");
+	if (argc == 1) {
+		usage();
+		return 1;
 	}
 
-	delete tcp;
-	delete [] buffer;
+	try {
+		server = new WebServer("LP3", atoi(argv[1]));
+		server->run();
+	} catch (TCPError error) {
+		std::cerr << "What(): " << error.what() << std::endl;
+	}
+
+	delete server;
 	return 0;
 }

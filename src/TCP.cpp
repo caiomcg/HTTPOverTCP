@@ -53,3 +53,16 @@ int TCP::acceptConnection() {
 	} 
  	return accept(serverFileDescriptor, (struct sockaddr*) &clientFileDescriptor, &clientSize);
 }
+
+int TCP::receivedata(const int socketDescriptor, uint8_t* buffer, const size_t bufferLength, const unsigned int timeout) {  
+	//if (timeout > 0) {
+	//	struct timeval tv;
+	//	
+	//    tv.tv_sec  = timeout;
+	//    tv.tv_usec = 0;
+//
+//	//    setsockopt(socketDescriptor, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
+	//}
+
+	return recv(socketDescriptor, buffer, bufferLength, 0);
+}

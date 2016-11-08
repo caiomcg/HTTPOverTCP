@@ -10,13 +10,17 @@
 #include <sys/stat.h>
 //---------------------------------------------------------------------------------------------
 
+//C Headers
+//---------------------------------------------------------------------------------------------
 #include <cstring>
+//---------------------------------------------------------------------------------------------
 
+//Custom Headers
+//---------------------------------------------------------------------------------------------
 #include "../include/TCPError.h"
 #include "../include/Utils.h"
-
-typedef int(*CallbackFuction)(char* data, int size, int error);
-
+//---------------------------------------------------------------------------------------------
+//
 enum SocketFamily{
 	IPV4,
 	IPV6
@@ -41,6 +45,15 @@ private:
 	struct sockaddr_in serverAddress;
 	struct sockaddr_in clientAddress;
 
+	/**
+	 * @brief Create the socket
+	 * @details Create a stream socket with IPV4 or IPV6 and client or server mode.
+	 * 
+	 * @param family The socket family: IPV4 or IPV6
+	 * @param user The type of user:  CLIENT or SERVER
+	 * 
+	 * @return 1 if success
+	 */
 	int createSocket(const SocketFamily family, const SocketUser user);
 	int bindSocket();
 public:
@@ -52,6 +65,8 @@ public:
 	int acceptConnection();
 
 	int close(const int identifier);
+
+	static int receivedata(const int socketDescriptor, uint8_t* buffer, const size_t bufferLength, const unsigned int timeout = 10);
 };
 
 #endif // define TCP_H
