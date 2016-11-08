@@ -15,7 +15,7 @@ void WebServer::run() {
 	int client = 0;
 
 	if (!tcp->listenTo()) {
-		Utils::verbose("INFO", "Socket is listening");
+		Utils::verbose("INFO", "Socket is listening at port: " + std::to_string(tcp->getPort()));
 
 		while (keepListening) {
 			if ((client = tcp->acceptConnection()) >= 0) {
@@ -31,10 +31,10 @@ void WebServer::run() {
 }
 
 void WebServer::prepareClient(const int client) {
-	uint8_t* buffer = new uint8_t[200];
+	uint8_t* buffer = new uint8_t[65535];
 	int response = 0;
 
-	if((response = TCP::receivedata(client, buffer, 200)) >= 0) {
+	if((response = TCP::receivedata(client, buffer, 65535)) >= 0) {
 		Utils::verbose("DEBUG", "Text received");
 		std::clog << buffer << std::endl;
 	} else {
@@ -42,7 +42,6 @@ void WebServer::prepareClient(const int client) {
 	}
 	
 	//PROCESS
-	
 	//GET DATA
 	//
 	//PROCESS

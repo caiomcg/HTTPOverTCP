@@ -1,9 +1,15 @@
 #include "../include/TCP.h"
 
-TCP::TCP(SocketFamily family, SocketUser user, const int port, const int maxClient)  : user(user), serverFileDescriptor(0), clientFileDescriptor(0), backlog(maxClient), clientSize(0) {
+TCP::TCP(SocketFamily family, SocketUser user, const int port, const int maxClient)  : user(user), serverFileDescriptor(0), clientFileDescriptor(0), backlog(maxClient), port(port), clientSize(0) {
+	int identifier = 0;
+
 	if (!createSocket(family, user)) {
-			throw TCPError("Socket Creation Error.");
+		throw TCPError("Socket Creation Error.");
 	}
+
+	if (setsockopt((user == SocketUser::CLIENT ? clientFileDescriptor : serverFileDescriptor), SOL_SOCKET, SO_REUSEADDR, &identifier, sizeof(identifier)) < 0)
+    	throw TCPError("Could not set socket options");
+
 
 	struct sockaddr_in* address = &(user == SocketUser::CLIENT ? clientAddress : serverAddress);
 
@@ -52,6 +58,10 @@ int TCP::acceptConnection() {
 		return -1;
 	} 
  	return accept(serverFileDescriptor, (struct sockaddr*) &clientFileDescriptor, &clientSize);
+}
+
+int TCP::getPort() const {
+	return port;
 }
 
 int TCP::receivedata(const int socketDescriptor, uint8_t* buffer, const size_t bufferLength, const unsigned int timeout) {  

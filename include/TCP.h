@@ -39,6 +39,7 @@ private:
 	int clientFileDescriptor;
 
 	int backlog;
+	int port;
 
 	socklen_t clientSize;
 
@@ -65,6 +66,8 @@ public:
 	int acceptConnection();
 
 	int close(const int identifier);
+
+	int getPort() const;
 
 	static int receivedata(const int socketDescriptor, uint8_t* buffer, const size_t bufferLength, const unsigned int timeout = 10);
 };
