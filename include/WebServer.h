@@ -7,13 +7,15 @@
 
 #include <thread>
 #include <error.h>
+#include <fstream>
 
 class WebServer {
 private:
-	TCP* tcp;
+	TCP* _tcp;
 
-	bool keepListening;
-	int newClient;
+	bool _keepListening;
+
+	std::string _fileRequested;
 
 public:
 	WebServer(const std::string serverName, const int port = 5000);

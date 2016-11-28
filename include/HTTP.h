@@ -2,27 +2,21 @@
 #define HTTP_H
 
 #include <regex>
+#include <functional>
+#include <fstream>
 #include <ctime>
+#include <iostream>
 #include "../include/Utils.h"
 
-enum SUCCESS {
-	OK=200
-};
-
-enum REDIRECTION {
+enum HTTPStatus{
+	OK=200,
 	FOUND = 302,
 	NOT_MODIFIED = 304,
-	TEMPORARY_REDIRECT = 307
-};
-
-enum CLIENT_ERROR {
+	TEMPORARY_REDIRECT = 307,
 	BAD_REQUEST = 400,
 	UNAUTHORIZED = 401,
 	FORBIDDEN = 403,
-	NOT_FOUND = 404
-};
-
-enum SERVER_ERROR {
+	NOT_FOUND = 404,
 	INTERNAL_SERVER_ERROR = 500,
 	NOT_IMPLEMENTD = 501,
 	SERVICE_UNAVEILABLE = 503,
@@ -31,19 +25,28 @@ enum SERVER_ERROR {
 
 class HTTP {
 private:
-	size_t   buffer_size;    
-	uint8_t* buffer;
+
+	size_t   _packetBytes;
+	uint8_t*  _packetBuffer;
+
+	size_t   _fileBytes;
+	uint8_t* _fileBuffer;
+
+	std::string _filePath;
+	std::string _response;
 
 	std::string findPath(std::string& in, std::string message);
-	bool findData();
 	std::string httpDate();
 
 public:
 	HTTP();
 	~HTTP();
 
-	std::string processMessage(const uint8_t* buffer);
-	std::string createResponseHeader(const size_t length, const std::string path, const int statusCode);
+	bool fileExists(const std::string filePath);
+	uint8_t* processMessage(const uint8_t* buffer, std::function<uint8_t* (const std::string&, const std::string, std::string&)> function);
+	void createResponseHeader(const std::string path, const int statusCode);
+	uint8_t* preparePacket();
+	size_t getPacketSize() const;
 };
 
 #endif // Define HTTP_H
