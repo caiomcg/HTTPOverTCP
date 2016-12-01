@@ -8,8 +8,11 @@
 #include <iostream>
 #include "../include/Utils.h"
 
+#define MAX_SIZE 10142330 //10MB
+
 enum HTTPStatus{
 	OK=200,
+	PARTIAL_CONTENT=206,
 	FOUND = 302,
 	NOT_MODIFIED = 304,
 	TEMPORARY_REDIRECT = 307,
@@ -32,6 +35,8 @@ private:
 	size_t   _fileBytes;
 	uint8_t* _fileBuffer;
 
+	std::string _httpType;
+
 	std::string _requestedFile;
 	std::string _requestedFileType;
 
@@ -50,6 +55,7 @@ public:
 	void createResponseHeader(const int statusCode);
 	uint8_t* preparePacket();
 	size_t getPacketSize() const;
+	std::string getHTTPHeader() const;
 };
 
 #endif // Define HTTP_H

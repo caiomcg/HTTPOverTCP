@@ -32,7 +32,7 @@ void WebServer::run() {
 }
 
 void WebServer::prepareClient(const int client) {
-	uint8_t* buffer = new uint8_t[65535];
+	uint8_t* buffer = new uint8_t[MAX_SIZE];
 	HTTP* http = new HTTP();
 
 	std::string responseHeader;
@@ -40,7 +40,7 @@ void WebServer::prepareClient(const int client) {
 	int response = 0;
 
 
-	if ((response = TCP::receivedata(client, buffer, 65535)) >= 0) {
+	if ((response = TCP::receivedata(client, buffer, MAX_SIZE)) >= 0) {
 		Utils::verbose("DEBUG", "Text received");
 
 		uint8_t* packet = http->processMessage(buffer, [http](const std::string& path, const std::string type, std::string& buffer) -> uint8_t* {
@@ -51,7 +51,18 @@ void WebServer::prepareClient(const int client) {
 
 				http->createResponseHeader((!exists ? HTTPStatus::NOT_FOUND : HTTPStatus::OK));
 			} else if (type == "POST") {
-				;
+				Utils::verbose("DEBUG", buffer);
+				buffer = buffer.substr(buffer.find("\r\n\r\n")).erase(0,2);
+				std::ofstream output("." + path, std::ios_base::out | std::ios_base::binary);
+				if (output.is_open()) {
+					output.write(buffer.c_str(), sizeof(char) * buffer.size());
+					Utils::verbose("INFO", "Wrote to file");
+					http->createResponseHeader(HTTPStatus::OK);
+				} else {
+					http->createResponseHeader(HTTPStatus::INTERNAL_SERVER_ERROR);
+				}
+				output.close();
+				
 			} else if (type == "PUT") {
 				;
 			} else if (type == "DELETE") {
@@ -59,7 +70,6 @@ void WebServer::prepareClient(const int client) {
 			} else {
 				http->createResponseHeader(HTTPStatus::NOT_FOUND);
 			}
-			
 			return http->preparePacket(); 
 		});
 

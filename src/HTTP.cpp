@@ -47,13 +47,14 @@ uint8_t* HTTP::processMessage(const uint8_t* buffer, std::function<uint8_t* (con
 	std::string message((char*)buffer);
 
 	if (message.find("GET") != std::string::npos) {
+		_httpType = "GET";
 		Utils::verbose("INFO", "GET: " + findPath(message, "GET"));
 
 		_requestedFile = findPath(message, "GET");
 
 		Utils::verbose("DEBUG", "Request File: " + _requestedFile);
 
-		if(_requestedFile == "/") {
+		if (_requestedFile == "/") {
 	        _requestedFile = "/index.html";
 	        _requestedFileType = "text/html; charset=UTF-8";
 	    } else {
@@ -68,7 +69,7 @@ uint8_t* HTTP::processMessage(const uint8_t* buffer, std::function<uint8_t* (con
 	        else if(!filetype.compare("gif"))
 	            _requestedFileType = "image/gif";
 	        else if(!filetype.compare("ico"))
-	            _requestedFileType = "image/x-icon";
+				_requestedFileType = "image/x-icon";
 	        else if(!filetype.compare("mp3"))
 	            _requestedFileType = "audio/mpeg";
 	        else if(!filetype.compare("wav"))
@@ -91,14 +92,17 @@ uint8_t* HTTP::processMessage(const uint8_t* buffer, std::function<uint8_t* (con
 		return function(_requestedFile, "GET", message);
 	} 
 	if (message.find("POST") != std::string::npos) {
+		_httpType = "POST";
 		Utils::verbose("INFO", "POST: " + findPath(message, "POST"));
 		return function(findPath(message, "POST"), "POST", message);
 	} 
 	if (message.find("PUT") != std::string::npos) {
+		_httpType = "PUT";
 		Utils::verbose("INFO", "PUT: " + findPath(message, "PUT"));
 		return function(findPath(message, "PUT"), "PUT", message);
 	} 
 	if (message.find("DELETE") != std::string::npos) {
+		_httpType = "DELETE";
 		Utils::verbose("INFO", "DELETE: " + findPath(message, "DELETE"));
 		return function(findPath(message, "DELETE"), "DELETE", message);
 	}
@@ -137,7 +141,19 @@ void HTTP::createResponseHeader(const int statusCode){
 	std::string jump("\n");
 
 	if (statusCode == HTTPStatus::NOT_FOUND) {
+		_requestedFileType = "text/html; charset=UTF-8";
 		message =  "<!DOCTYPE HTML> <html> <head> <title>404 Not Found</title> </head> <body> <h1>Not Found</h1>  <p>The requested URL " + _requestedFile + " was not found on this server.</p> </body> </html>";
+	}
+	if (_httpType == "POST") {
+		Utils::verbose("DEBUG", "At post");
+		_requestedFileType = "application/json; charset=UTF-8";
+		if (statusCode == HTTPStatus::OK) {
+			Utils::verbose("DEBUG", "Good message");
+			message = "{\"Insert\": \"OK\"}";
+			_fileBytes = message.size();
+		} else {
+			message = "{\"Insert\": \"FAIL\"}";
+		}
 	}
 	_response += "Access-Control-Allow-Origin: *" + jump;
 	_response += "Access-Control-Allow-Headers: X-Requested-With, Content-Type, X-Codingpedia, X-HTTP-Method-Override" + jump;
@@ -146,13 +162,14 @@ void HTTP::createResponseHeader(const int statusCode){
 	_response += "Response: " + std::string("SimpleHTTPServerC++/0.0.1 (Unix)") + jump; //Allow to modify the server name.
 	_response += "Content-Location: " + _requestedFile + jump;
 	_response += "Connection: " + std::string("close") + jump; //Change close to a var type.
-	_response += "Content-Length: " + std::to_string((statusCode == HTTPStatus::NOT_FOUND) ? message.length() : _fileBytes) + jump;
+	_response += "Content-Length: " + std::to_string((statusCode != HTTPStatus::OK) ? message.length() : _fileBytes) + jump;
 	_response += "Content-Type: " + _requestedFileType + jump;//std::string("text/html; charset=utf-8") + jump; //Variable type;
 	_response += "Cache-Control: public, max-age=0" + jump;
 	_response += "Server: " + std::string("SimpleHTTPServerC++/0.0.1 (Unix)") + jump + jump;
-	Utils::verbose("DEBUG", _response);
 
 	_response += message;
+
+	Utils::verbose("DEBUG", _response);
 }
 
 uint8_t* HTTP::preparePacket() {
@@ -175,4 +192,8 @@ uint8_t* HTTP::preparePacket() {
 
 size_t HTTP::getPacketSize() const {
 	return _packetBytes;
+}
+
+std::string HTTP::getHTTPHeader() const {
+	return _response;
 }
