@@ -5,7 +5,9 @@
 #include <functional>
 #include <fstream>
 #include <ctime>
+#include <cstdio>
 #include <string>
+#include <cstring>
 #include <iostream>
 #include "../include/Utils.h"
 
@@ -52,6 +54,7 @@ public:
 	~HTTP();
 
 	bool fileExists(const std::string filePath);
+	bool onlyFileExists(const std::string filePath);
 	uint8_t* processMessage(const uint8_t* buffer, std::function<uint8_t* (const std::string&, const std::string, std::string&)> function);
 	void createResponseHeader(const int statusCode);
 	uint8_t* preparePacket();

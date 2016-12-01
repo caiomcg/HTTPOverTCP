@@ -21,9 +21,7 @@ void WebServer::run() {
 		while (_keepListening) {
 			if ((client = _tcp->acceptConnection()) >= 0) {
 				Utils::verbose("INFO", "Accepted connection");
-				std::thread ([=](){ 
-					WebServer::prepareClient(client); 
-				}).detach();
+				std::thread(&WebServer::prepareClient, this, client).detach();
 			}
 		}
 	} else {
@@ -41,22 +39,29 @@ void WebServer::prepareClient(const int client) {
 
 
 	if ((response = TCP::receivedata(client, buffer, MAX_SIZE)) >= 0) {
-		Utils::verbose("DEBUG", "Text received");
+
+		std::cerr << "BUFFER: " << "\n" << (char*)buffer << std::endl;
 
 		uint8_t* packet = http->processMessage(buffer, [http](const std::string& path, const std::string type, std::string& buffer) -> uint8_t* {
 			bool exists = false;
-			
+
+			Utils::verbose("DEBUG", buffer);
+
 			if (type == "GET") {
 				exists = http->fileExists(path);
 
 				http->createResponseHeader((!exists ? HTTPStatus::NOT_FOUND : HTTPStatus::OK));
 			} else if (type == "POST") {
-				Utils::verbose("DEBUG", buffer);
-				buffer = buffer.substr(buffer.find("\r\n\r\n")).erase(0,2);
+				buffer = buffer.substr(buffer.find("\r\n\r\n"));
+				buffer = buffer.erase(0,2);
+
+				std::cout << "======" << std::endl;
+				std::cout << buffer << std::endl;
+				std::cout << "======" << std::endl;
+
 				std::ofstream output("." + path, std::ios_base::out | std::ios_base::binary);
 				if (output.is_open()) {
 					output.write(buffer.c_str(), sizeof(char) * buffer.size());
-					Utils::verbose("INFO", "Wrote to file");
 					http->createResponseHeader(HTTPStatus::OK);
 				} else {
 					http->createResponseHeader(HTTPStatus::INTERNAL_SERVER_ERROR);
@@ -64,9 +69,42 @@ void WebServer::prepareClient(const int client) {
 				output.close();
 				
 			} else if (type == "PUT") {
-				;
+				buffer = buffer.substr(buffer.find("\r\n\r\n"));
+				buffer = buffer.erase(0,2);
+
+				std::cout << "======" << std::endl;
+				std::cout << buffer << std::endl;
+				std::cout << "======" << std::endl;
+
+				if (http->onlyFileExists("." + path)) {
+					std::ofstream output("." + path, std::ios_base::out | std::ios_base::binary);
+					if (output.is_open()) {
+						output.write(buffer.c_str(), sizeof(char) * buffer.size());
+						http->createResponseHeader(HTTPStatus::OK);
+					} else {
+						http->createResponseHeader(HTTPStatus::INTERNAL_SERVER_ERROR);
+					}
+					output.close();
+				} else {
+					http->createResponseHeader(HTTPStatus::BAD_REQUEST);
+				}
+				
 			} else if (type == "DELETE") {
-				;
+				std::string file = "." + path;
+
+				buffer = buffer.substr(buffer.find("\r\n\r\n"));
+				buffer = buffer.erase(0,2);
+
+				if (http->onlyFileExists(file)) {
+					if (remove(file.c_str()) != 0) {
+						http->createResponseHeader(HTTPStatus::INTERNAL_SERVER_ERROR);
+					} else {
+						http->createResponseHeader(HTTPStatus::OK);
+					}
+				} else {
+					http->createResponseHeader(HTTPStatus::BAD_REQUEST);
+				}
+
 			} else {
 				http->createResponseHeader(HTTPStatus::NOT_FOUND);
 			}

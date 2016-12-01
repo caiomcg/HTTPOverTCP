@@ -52,8 +52,6 @@ uint8_t* HTTP::processMessage(const uint8_t* buffer, std::function<uint8_t* (con
 
 		_requestedFile = findPath(message, "GET");
 
-		Utils::verbose("DEBUG", "Request File: " + _requestedFile);
-
 		if (_requestedFile == "/") {
 	        _requestedFile = "/index.html";
 	        _requestedFileType = "text/html; charset=UTF-8";
@@ -135,6 +133,18 @@ bool HTTP::fileExists(const std::string filePath) {
 	return true;
 }
 
+bool HTTP::onlyFileExists(const std::string filePath) {
+	std::ifstream input(filePath);
+	Utils::verbose("DEBUG", "Searching File: " + filePath);
+	if (!input.is_open()) {
+		Utils::verbose("ERROR", "Bad file");
+		input.close();
+		return false;
+	}
+	input.close();
+	return true;
+}
+
 void HTTP::createResponseHeader(const int statusCode){
 	_response = "HTTP/1.1 " + std::to_string(statusCode) + "\n";
 	std::string message("");
@@ -145,14 +155,30 @@ void HTTP::createResponseHeader(const int statusCode){
 		message =  "<!DOCTYPE HTML> <html> <head> <title>404 Not Found</title> </head> <body> <h1>Not Found</h1>  <p>The requested URL " + _requestedFile + " was not found on this server.</p> </body> </html>";
 	}
 	if (_httpType == "POST") {
-		Utils::verbose("DEBUG", "At post");
 		_requestedFileType = "application/json; charset=UTF-8";
 		if (statusCode == HTTPStatus::OK) {
-			Utils::verbose("DEBUG", "Good message");
 			message = "{\"Insert\": \"OK\"}";
 			_fileBytes = message.size();
 		} else {
 			message = "{\"Insert\": \"FAIL\"}";
+		}
+	}
+	if (_httpType == "PUT") {
+		_requestedFileType = "application/json; charset=UTF-8";
+		if (statusCode == HTTPStatus::OK) {
+			message = "{\"Insert\": \"OK\"}";
+			_fileBytes = message.size();
+		} else {
+			message = "{\"Insert\": \"FAIL\"}";
+		}
+	}
+	if (_httpType == "DELETE") {
+		_requestedFileType = "application/json; charset=UTF-8";
+		if (statusCode == HTTPStatus::OK) {
+			message = "{\"DELETE\": \"OK\"}";
+			_fileBytes = message.size();
+		} else {
+			message = "{\"DELETE\": \"FAIL\"}";
 		}
 	}
 	_response += "Access-Control-Allow-Origin: *" + jump;
@@ -182,9 +208,9 @@ uint8_t* HTTP::preparePacket() {
 	_packetBytes = _response.length() + len;
 	_packetBuffer = new uint8_t[_packetBytes];
 
-	std::memcpy(_packetBuffer, _response.c_str(), _response.length());
+	memcpy(_packetBuffer, _response.c_str(), _response.length());
 	if (len > 0) {
-		std::memcpy(_packetBuffer + _response.length(), _fileBuffer, len);
+		memcpy(_packetBuffer + _response.length(), _fileBuffer, len);
 	}
 
 	return _packetBuffer;
