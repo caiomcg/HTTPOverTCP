@@ -182,9 +182,9 @@ uint8_t* HTTP::preparePacket() {
 	_packetBytes = _response.length() + len;
 	_packetBuffer = new uint8_t[_packetBytes];
 
-	memcpy(_packetBuffer, _response.c_str(), _response.length());
+	std::memcpy(_packetBuffer, _response.c_str(), _response.length());
 	if (len > 0) {
-		memcpy(_packetBuffer + _response.length(), _fileBuffer, len);
+		std::memcpy(_packetBuffer + _response.length(), _fileBuffer, len);
 	}
 
 	return _packetBuffer;
