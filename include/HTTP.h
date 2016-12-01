@@ -32,6 +32,9 @@ private:
 	size_t   _fileBytes;
 	uint8_t* _fileBuffer;
 
+	std::string _requestedFile;
+	std::string _requestedFileType;
+
 	std::string _filePath;
 	std::string _response;
 
@@ -44,7 +47,7 @@ public:
 
 	bool fileExists(const std::string filePath);
 	uint8_t* processMessage(const uint8_t* buffer, std::function<uint8_t* (const std::string&, const std::string, std::string&)> function);
-	void createResponseHeader(const std::string path, const int statusCode);
+	void createResponseHeader(const int statusCode);
 	uint8_t* preparePacket();
 	size_t getPacketSize() const;
 };

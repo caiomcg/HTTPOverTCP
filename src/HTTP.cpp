@@ -48,7 +48,47 @@ uint8_t* HTTP::processMessage(const uint8_t* buffer, std::function<uint8_t* (con
 
 	if (message.find("GET") != std::string::npos) {
 		Utils::verbose("INFO", "GET: " + findPath(message, "GET"));
-		return function(findPath(message, "GET"), "GET", message);
+
+		_requestedFile = findPath(message, "GET");
+
+		Utils::verbose("DEBUG", "Request File: " + _requestedFile);
+
+		if(_requestedFile == "/") {
+	        _requestedFile = "/index.html";
+	        _requestedFileType = "text/html; charset=UTF-8";
+	    } else {
+	        std::string filetype = _requestedFile.substr(_requestedFile.rfind(".", _requestedFile.length() - 1) + 1, _requestedFile.length() - 1);
+
+	        if(!filetype.compare("html") || !filetype.compare("htm"))
+	            _requestedFileType = "text/html; charset=UTF-8";
+	        else if(!filetype.compare("jpg"))
+	            _requestedFileType = "image/jpg";
+	        else if(!filetype.compare("png"))
+	            _requestedFileType = "image/png";
+	        else if(!filetype.compare("gif"))
+	            _requestedFileType = "image/gif";
+	        else if(!filetype.compare("ico"))
+	            _requestedFileType = "image/x-icon";
+	        else if(!filetype.compare("mp3"))
+	            _requestedFileType = "audio/mpeg";
+	        else if(!filetype.compare("wav"))
+	            _requestedFileType = "audio/wav";
+	        else if(!filetype.compare("mp4"))
+	            _requestedFileType = "video/mp4";
+	        else if(!filetype.compare("webm"))
+	            _requestedFileType = "video/webm";
+	        else if(!filetype.compare("ogg"))
+	            _requestedFileType = "video/ogg";
+	        else if(!filetype.compare("json"))
+	            _requestedFileType = "application/json; charset=UTF-8";
+	        else if(!filetype.compare("js"))
+	            _requestedFileType = "application/javascript; charset=UTF-8";
+	        else if(!filetype.compare("css"))
+	            _requestedFileType = "text/css";
+	        else
+	            _requestedFileType = "application/octet-stream";
+	    }
+		return function(_requestedFile, "GET", message);
 	} 
 	if (message.find("POST") != std::string::npos) {
 		Utils::verbose("INFO", "POST: " + findPath(message, "POST"));
@@ -91,31 +131,30 @@ bool HTTP::fileExists(const std::string filePath) {
 	return true;
 }
 
-void HTTP::createResponseHeader(const std::string path, const int statusCode){
+void HTTP::createResponseHeader(const int statusCode){
 	_response = "HTTP/1.1 " + std::to_string(statusCode) + "\n";
 	std::string message("");
 	std::string jump("\n");
 
-	this->_filePath = path;
-
 	if (statusCode == HTTPStatus::NOT_FOUND) {
-		message =  "<!DOCTYPE HTML> <html> <head> <title>404 Not Found</title> </head> <body> <h1>Not Found</h1>  <p>The requested URL " + path + " was not found on this server.</p> </body> </html>";
+		message =  "<!DOCTYPE HTML> <html> <head> <title>404 Not Found</title> </head> <body> <h1>Not Found</h1>  <p>The requested URL " + _requestedFile + " was not found on this server.</p> </body> </html>";
 	}
 	_response += "Access-Control-Allow-Origin: *" + jump;
 	_response += "Access-Control-Allow-Headers: X-Requested-With, Content-Type, X-Codingpedia, X-HTTP-Method-Override" + jump;
 	_response += "x-content-type-options: nosniff" + jump;
 	_response += "Date: " + httpDate() + jump;
 	_response += "Response: " + std::string("SimpleHTTPServerC++/0.0.1 (Unix)") + jump; //Allow to modify the server name.
-	_response += "Content-Location: " + path + jump;
+	_response += "Content-Location: " + _requestedFile + jump;
 	_response += "Connection: " + std::string("close") + jump; //Change close to a var type.
 	_response += "Content-Length: " + std::to_string((statusCode == HTTPStatus::NOT_FOUND) ? message.length() : _fileBytes) + jump;
-	_response += "Content-Type: " + std::string("/image/jpg") + jump;//std::string("text/html; charset=utf-8") + jump; //Variable type;
+	_response += "Content-Type: " + _requestedFileType + jump;//std::string("text/html; charset=utf-8") + jump; //Variable type;
 	_response += "Cache-Control: public, max-age=0" + jump;
 	_response += "Server: " + std::string("SimpleHTTPServerC++/0.0.1 (Unix)") + jump + jump;
 	Utils::verbose("DEBUG", _response);
 
 	_response += message;
 }
+
 uint8_t* HTTP::preparePacket() {
 	size_t len = 0;
 

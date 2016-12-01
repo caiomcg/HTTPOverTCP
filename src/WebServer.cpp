@@ -45,10 +45,20 @@ void WebServer::prepareClient(const int client) {
 
 		uint8_t* packet = http->processMessage(buffer, [http](const std::string& path, const std::string type, std::string& buffer) -> uint8_t* {
 			bool exists = false;
-				
-			exists = http->fileExists(path);
+			
+			if (type == "GET") {
+				exists = http->fileExists(path);
 
-			http->createResponseHeader(path, (!exists ? HTTPStatus::NOT_FOUND : HTTPStatus::OK));
+				http->createResponseHeader((!exists ? HTTPStatus::NOT_FOUND : HTTPStatus::OK));
+			} else if (type == "POST") {
+				;
+			} else if (type == "PUT") {
+				;
+			} else if (type == "DELETE") {
+				;
+			} else {
+				http->createResponseHeader(HTTPStatus::NOT_FOUND);
+			}
 			
 			return http->preparePacket(); 
 		});
