@@ -5,6 +5,7 @@
 #include <functional>
 #include <fstream>
 #include <ctime>
+#include <string>
 #include <iostream>
 #include "../include/Utils.h"
 
