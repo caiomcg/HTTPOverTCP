@@ -1,7 +1,45 @@
+/**
+ * @file HTTP.h
+ * 
+ * @class HTTP
+ *
+ * @brief HTTP packet creator
+ *        
+ * This Class is responsible for handling the message buffer containing
+ * a HTTP request. After parsing the request the user can ask the class
+ * to process the message with the file selected under the HTTP Header
+ * for GET. A JSON message telling if the file was successfully added or 
+ * removed for POST, PUT and DELETE.
+ *
+ * @license MIT License
+ * 
+ * Copyright (c) 2016 Caio Marcelo Campoy Guedes
+ * 					  Nycholas de Sousa
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @author Caio Marcelo Campoy Guedes <caiomcg@gmail.com>
+ * @author Nycholas de Sousa <nycholas@live.com>
+ */
+
 #include "../include/HTTP.h"
 
 
-HTTP::HTTP() : _packetBytes(0), _packetBuffer(nullptr), _fileBytes(0), _fileBuffer(nullptr), _filePath("") {
+HTTP::HTTP() : _packetBytes(0), _packetBuffer(nullptr), _fileBytes(0), _fileBuffer(nullptr) {
 
 }
 
@@ -108,7 +146,7 @@ uint8_t* HTTP::processMessage(const uint8_t* buffer, std::function<uint8_t* (con
 	return function("", "", message);
 }
 
-bool HTTP::fileExists(const std::string filePath) {
+bool HTTP::fileExistsAndAd(const std::string filePath) {
 	std::ifstream input("." + filePath, std::ios::binary | std::ios::in);
 	Utils::verbose("DEBUG", "Searching File: " + filePath);
 	if (!input.is_open()) {

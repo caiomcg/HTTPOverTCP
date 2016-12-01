@@ -1,6 +1,6 @@
 #include "../include/WebServer.h"
 
-WebServer::WebServer(const std::string serverName, const int port) : _tcp(nullptr), _keepListening(false), _fileRequested("") {
+WebServer::WebServer(const std::string serverName, const int port) : _tcp(nullptr), _keepListening(false) {
 	this->_tcp = new TCP(SocketFamily::IPV4, SocketUser::SERVER, port);
 }
 
@@ -48,7 +48,7 @@ void WebServer::prepareClient(const int client) {
 			Utils::verbose("DEBUG", buffer);
 
 			if (type == "GET") {
-				exists = http->fileExists(path);
+				exists = http->fileExistsAndAd(path);
 
 				http->createResponseHeader((!exists ? HTTPStatus::NOT_FOUND : HTTPStatus::OK));
 			} else if (type == "POST") {
