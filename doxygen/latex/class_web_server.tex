@@ -1,0 +1,100 @@
+\hypertarget{class_web_server}{}\section{Web\+Server Class Reference}
+\label{class_web_server}\index{Web\+Server@{Web\+Server}}
+
+
+Server manager.  
+
+
+
+
+{\ttfamily \#include $<$Web\+Server.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_web_server_a99df0a21ce0fe770473a277edd8b8945}{Web\+Server} (const std\+::string server\+Name, const int port=8888)
+\begin{DoxyCompactList}\small\item\em Server constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_web_server_a1a0a29895986ab3558a638bc75f41259}{$\sim$\+Web\+Server} ()
+\begin{DoxyCompactList}\small\item\em Default destructor. \end{DoxyCompactList}\item 
+void \hyperlink{class_web_server_a0879d889c9d1071060e868b9149a20c6}{run} ()\hypertarget{class_web_server_a0879d889c9d1071060e868b9149a20c6}{}\label{class_web_server_a0879d889c9d1071060e868b9149a20c6}
+
+\begin{DoxyCompactList}\small\item\em Run the server. \end{DoxyCompactList}\item 
+void \hyperlink{class_web_server_a63ae5c9626589ec36d5b0c49842235e2}{prepare\+Client} (const int client)
+\begin{DoxyCompactList}\small\item\em Callback for the client threads. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Server manager. 
+
+This Class manages the connections with the help of the \hyperlink{class_h_t_t_p}{H\+T\+TP} and \hyperlink{class_t_c_p}{T\+CP} classes.
+
+M\+IT License
+
+Copyright (c) 2016 Caio Marcelo Campoy Guedes Nycholas de Sousa
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \char`\"{}\+Software\char`\"{}), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions\+: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. T\+HE S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED \char`\"{}\+A\+S I\+S\char`\"{}, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+TY OF A\+NY K\+I\+ND, E\+X\+P\+R\+E\+SS OR I\+M\+P\+L\+I\+ED, I\+N\+C\+L\+U\+D\+I\+NG B\+UT N\+OT L\+I\+M\+I\+T\+ED TO T\+HE W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT. IN NO E\+V\+E\+NT S\+H\+A\+LL T\+HE A\+U\+T\+H\+O\+RS OR C\+O\+P\+Y\+R\+I\+G\+HT H\+O\+L\+D\+E\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY C\+L\+A\+IM, D\+A\+M\+A\+G\+ES OR O\+T\+H\+ER L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN AN A\+C\+T\+I\+ON OF C\+O\+N\+T\+R\+A\+CT, T\+O\+RT OR O\+T\+H\+E\+R\+W\+I\+SE, A\+R\+I\+S\+I\+NG F\+R\+OM, O\+UT OF OR IN C\+O\+N\+N\+E\+C\+T\+I\+ON W\+I\+TH T\+HE S\+O\+F\+T\+W\+A\+RE OR T\+HE U\+SE OR O\+T\+H\+ER D\+E\+A\+L\+I\+N\+GS IN T\+HE S\+O\+F\+T\+W\+A\+RE.
+
+\begin{DoxyAuthor}{Author}
+Caio Marcelo Campoy Guedes \href{mailto:caiomcg@gmail.com}{\tt caiomcg@gmail.\+com} 
+
+Nycholas de Sousa \href{mailto:nycholas@live.com}{\tt nycholas@live.\+com} 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Web\+Server@{Web\+Server}!Web\+Server@{Web\+Server}}
+\index{Web\+Server@{Web\+Server}!Web\+Server@{Web\+Server}}
+\subsubsection[{\texorpdfstring{Web\+Server(const std\+::string server\+Name, const int port=8888)}{WebServer(const std::string serverName, const int port=8888)}}]{\setlength{\rightskip}{0pt plus 5cm}Web\+Server\+::\+Web\+Server (
+\begin{DoxyParamCaption}
+\item[{const std\+::string}]{server\+Name, }
+\item[{const int}]{port = {\ttfamily 8888}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_web_server_a99df0a21ce0fe770473a277edd8b8945}{}\label{class_web_server_a99df0a21ce0fe770473a277edd8b8945}
+
+
+Server constructor. 
+
+Initiates the server and calls the \hyperlink{class_t_c_p}{T\+CP} constructor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em server\+Name} & The name of the server. \\
+\hline
+{\em port} & The port to run the server \\
+\hline
+\end{DoxyParams}
+\index{Web\+Server@{Web\+Server}!````~Web\+Server@{$\sim$\+Web\+Server}}
+\index{````~Web\+Server@{$\sim$\+Web\+Server}!Web\+Server@{Web\+Server}}
+\subsubsection[{\texorpdfstring{$\sim$\+Web\+Server()}{~WebServer()}}]{\setlength{\rightskip}{0pt plus 5cm}Web\+Server\+::$\sim$\+Web\+Server (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_web_server_a1a0a29895986ab3558a638bc75f41259}{}\label{class_web_server_a1a0a29895986ab3558a638bc75f41259}
+
+
+Default destructor. 
+
+Release alloced memory. 
+
+\subsection{Member Function Documentation}
+\index{Web\+Server@{Web\+Server}!prepare\+Client@{prepare\+Client}}
+\index{prepare\+Client@{prepare\+Client}!Web\+Server@{Web\+Server}}
+\subsubsection[{\texorpdfstring{prepare\+Client(const int client)}{prepareClient(const int client)}}]{\setlength{\rightskip}{0pt plus 5cm}void Web\+Server\+::prepare\+Client (
+\begin{DoxyParamCaption}
+\item[{const int}]{client}
+\end{DoxyParamCaption}
+)}\hypertarget{class_web_server_a63ae5c9626589ec36d5b0c49842235e2}{}\label{class_web_server_a63ae5c9626589ec36d5b0c49842235e2}
+
+
+Callback for the client threads. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em client} & The client descriptor. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{_web_server_8h}{Web\+Server.\+h}\end{DoxyCompactItemize}

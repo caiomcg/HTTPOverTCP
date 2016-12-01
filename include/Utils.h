@@ -1,7 +1,7 @@
 /**
  * @file Utils.h
  *
- * @brief Utility class for logging+
+ * @brief Utility class for logging
  *        
  * Namespace responsible for logging.
  *

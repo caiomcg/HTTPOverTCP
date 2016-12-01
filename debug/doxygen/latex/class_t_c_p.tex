@@ -1,0 +1,230 @@
+\hypertarget{class_t_c_p}{}\section{T\+CP Class Reference}
+\label{class_t_c_p}\index{T\+CP@{T\+CP}}
+
+
+\hyperlink{class_t_c_p}{T\+CP} connection manager.  
+
+
+
+
+{\ttfamily \#include $<$T\+C\+P.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_t_c_p_a2e34b5e95ac3a10dfae54c3a90580c25}{T\+CP} (const \hyperlink{_t_c_p_8h_ade4363acb0f359029daf637cea73cf55}{Socket\+Family} family, \hyperlink{_t_c_p_8h_a95f589056c7a3d16ced261e576f9055d}{Socket\+User} user, const int port=5000, const int max\+Client=10)
+\begin{DoxyCompactList}\small\item\em The class constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_t_c_p_aa60dfec4c3dfdc84a0a64322eed4ee5c}{$\sim$\+T\+CP} ()\hypertarget{class_t_c_p_aa60dfec4c3dfdc84a0a64322eed4ee5c}{}\label{class_t_c_p_aa60dfec4c3dfdc84a0a64322eed4ee5c}
+
+\begin{DoxyCompactList}\small\item\em Default destructor. \end{DoxyCompactList}\item 
+int \hyperlink{class_t_c_p_a08da32477d29d88d0e60c3d1ee256874}{listen\+To} ()
+\begin{DoxyCompactList}\small\item\em Listen to a connection. \end{DoxyCompactList}\item 
+int \hyperlink{class_t_c_p_aeedb6f060ba87089bcbc9f241879e8ce}{accept\+Connection} ()
+\begin{DoxyCompactList}\small\item\em Accept a connection. \end{DoxyCompactList}\item 
+bool \hyperlink{class_t_c_p_a85071a2397175ffce4019ac421a37702}{close\+Socket} ()
+\begin{DoxyCompactList}\small\item\em Close the main socket. \end{DoxyCompactList}\item 
+int \hyperlink{class_t_c_p_aaafe7ddd1a319c3f7f3b48e1f88fc13b}{get\+Port} () const 
+\begin{DoxyCompactList}\small\item\em Get the running port. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \hyperlink{class_t_c_p_a75c116fdc24d803ab7fc3effead0793a}{close\+With\+Identifier} (const int identifier=-\/1)
+\begin{DoxyCompactList}\small\item\em Close a specific socket. \end{DoxyCompactList}\item 
+static int \hyperlink{class_t_c_p_ae120ce7abfcd5eb5bccec7960e84ea4b}{receivedata} (const int socket\+Descriptor, uint8\+\_\+t $\ast$buffer, const size\+\_\+t buffer\+Length, const unsigned int timeout=10)
+\begin{DoxyCompactList}\small\item\em Receive data from a socket. \end{DoxyCompactList}\item 
+static int \hyperlink{class_t_c_p_a2508bd0dafeb820da51b07ecdf1627f9}{send\+Data} (const int socket\+Descriptor, const uint8\+\_\+t $\ast$buffer, const size\+\_\+t buffer\+Length)
+\begin{DoxyCompactList}\small\item\em Send data from a socket. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_t_c_p}{T\+CP} connection manager. 
+
+This Class is responsible for creating and managing \hyperlink{class_t_c_p}{T\+CP} connections for clients and servers.
+
+M\+IT License
+
+Copyright (c) 2016 Caio Marcelo Campoy Guedes Nycholas de Sousa
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \char`\"{}\+Software\char`\"{}), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions\+: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. T\+HE S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED \char`\"{}\+A\+S I\+S\char`\"{}, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+TY OF A\+NY K\+I\+ND, E\+X\+P\+R\+E\+SS OR I\+M\+P\+L\+I\+ED, I\+N\+C\+L\+U\+D\+I\+NG B\+UT N\+OT L\+I\+M\+I\+T\+ED TO T\+HE W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT. IN NO E\+V\+E\+NT S\+H\+A\+LL T\+HE A\+U\+T\+H\+O\+RS OR C\+O\+P\+Y\+R\+I\+G\+HT H\+O\+L\+D\+E\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY C\+L\+A\+IM, D\+A\+M\+A\+G\+ES OR O\+T\+H\+ER L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN AN A\+C\+T\+I\+ON OF C\+O\+N\+T\+R\+A\+CT, T\+O\+RT OR O\+T\+H\+E\+R\+W\+I\+SE, A\+R\+I\+S\+I\+NG F\+R\+OM, O\+UT OF OR IN C\+O\+N\+N\+E\+C\+T\+I\+ON W\+I\+TH T\+HE S\+O\+F\+T\+W\+A\+RE OR T\+HE U\+SE OR O\+T\+H\+ER D\+E\+A\+L\+I\+N\+GS IN T\+HE S\+O\+F\+T\+W\+A\+RE.
+
+\begin{DoxyAuthor}{Author}
+Caio Marcelo Campoy Guedes \href{mailto:caiomcg@gmail.com}{\tt caiomcg@gmail.\+com} 
+
+Nycholas de Sousa \href{mailto:nycholas@live.com}{\tt nycholas@live.\+com} 
+\end{DoxyAuthor}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{T\+CP@{T\+CP}!T\+CP@{T\+CP}}
+\index{T\+CP@{T\+CP}!T\+CP@{T\+CP}}
+\subsubsection[{\texorpdfstring{T\+C\+P(const Socket\+Family family, Socket\+User user, const int port=5000, const int max\+Client=10)}{TCP(const SocketFamily family, SocketUser user, const int port=5000, const int maxClient=10)}}]{\setlength{\rightskip}{0pt plus 5cm}T\+C\+P\+::\+T\+CP (
+\begin{DoxyParamCaption}
+\item[{const {\bf Socket\+Family}}]{family, }
+\item[{{\bf Socket\+User}}]{user, }
+\item[{const int}]{port = {\ttfamily 5000}, }
+\item[{const int}]{max\+Client = {\ttfamily 10}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_t_c_p_a2e34b5e95ac3a10dfae54c3a90580c25}{}\label{class_t_c_p_a2e34b5e95ac3a10dfae54c3a90580c25}
+
+
+The class constructor. 
+
+Initiates the socket and bind the port if necessary.
+
+
+\begin{DoxyParams}{Parameters}
+{\em family} & Socket family. \\
+\hline
+{\em user} & Socket user. \\
+\hline
+{\em port} & Server port\mbox{[}If a server is selected\mbox{]}. \\
+\hline
+{\em max\+Client} & Maximum ammount of clients\mbox{[}If a server is selected\mbox{]}. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\index{T\+CP@{T\+CP}!accept\+Connection@{accept\+Connection}}
+\index{accept\+Connection@{accept\+Connection}!T\+CP@{T\+CP}}
+\subsubsection[{\texorpdfstring{accept\+Connection()}{acceptConnection()}}]{\setlength{\rightskip}{0pt plus 5cm}int T\+C\+P\+::accept\+Connection (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_t_c_p_aeedb6f060ba87089bcbc9f241879e8ce}{}\label{class_t_c_p_aeedb6f060ba87089bcbc9f241879e8ce}
+
+
+Accept a connection. 
+
+Accept a connection and return the file descriptor.
+
+\begin{DoxyReturn}{Returns}
+The file descriptor. 
+\end{DoxyReturn}
+\index{T\+CP@{T\+CP}!close\+Socket@{close\+Socket}}
+\index{close\+Socket@{close\+Socket}!T\+CP@{T\+CP}}
+\subsubsection[{\texorpdfstring{close\+Socket()}{closeSocket()}}]{\setlength{\rightskip}{0pt plus 5cm}bool T\+C\+P\+::close\+Socket (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_t_c_p_a85071a2397175ffce4019ac421a37702}{}\label{class_t_c_p_a85071a2397175ffce4019ac421a37702}
+
+
+Close the main socket. 
+
+\begin{DoxyReturn}{Returns}
+True if successful. 
+\end{DoxyReturn}
+\index{T\+CP@{T\+CP}!close\+With\+Identifier@{close\+With\+Identifier}}
+\index{close\+With\+Identifier@{close\+With\+Identifier}!T\+CP@{T\+CP}}
+\subsubsection[{\texorpdfstring{close\+With\+Identifier(const int identifier=-\/1)}{closeWithIdentifier(const int identifier=-1)}}]{\setlength{\rightskip}{0pt plus 5cm}static bool T\+C\+P\+::close\+With\+Identifier (
+\begin{DoxyParamCaption}
+\item[{const int}]{identifier = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_t_c_p_a75c116fdc24d803ab7fc3effead0793a}{}\label{class_t_c_p_a75c116fdc24d803ab7fc3effead0793a}
+
+
+Close a specific socket. 
+
+Close a socket by its identifier.
+
+
+\begin{DoxyParams}{Parameters}
+{\em identifier} & Socket identifier. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if successfuly closed. 
+\end{DoxyReturn}
+\index{T\+CP@{T\+CP}!get\+Port@{get\+Port}}
+\index{get\+Port@{get\+Port}!T\+CP@{T\+CP}}
+\subsubsection[{\texorpdfstring{get\+Port() const }{getPort() const }}]{\setlength{\rightskip}{0pt plus 5cm}int T\+C\+P\+::get\+Port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_t_c_p_aaafe7ddd1a319c3f7f3b48e1f88fc13b}{}\label{class_t_c_p_aaafe7ddd1a319c3f7f3b48e1f88fc13b}
+
+
+Get the running port. 
+
+\begin{DoxyReturn}{Returns}
+The running port. 
+\end{DoxyReturn}
+\index{T\+CP@{T\+CP}!listen\+To@{listen\+To}}
+\index{listen\+To@{listen\+To}!T\+CP@{T\+CP}}
+\subsubsection[{\texorpdfstring{listen\+To()}{listenTo()}}]{\setlength{\rightskip}{0pt plus 5cm}int T\+C\+P\+::listen\+To (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_t_c_p_a08da32477d29d88d0e60c3d1ee256874}{}\label{class_t_c_p_a08da32477d29d88d0e60c3d1ee256874}
+
+
+Listen to a connection. 
+
+Prepare the socket to listen to connections.
+
+\begin{DoxyReturn}{Returns}
+0 if successful. 
+\end{DoxyReturn}
+\index{T\+CP@{T\+CP}!receivedata@{receivedata}}
+\index{receivedata@{receivedata}!T\+CP@{T\+CP}}
+\subsubsection[{\texorpdfstring{receivedata(const int socket\+Descriptor, uint8\+\_\+t $\ast$buffer, const size\+\_\+t buffer\+Length, const unsigned int timeout=10)}{receivedata(const int socketDescriptor, uint8_t *buffer, const size_t bufferLength, const unsigned int timeout=10)}}]{\setlength{\rightskip}{0pt plus 5cm}static int T\+C\+P\+::receivedata (
+\begin{DoxyParamCaption}
+\item[{const int}]{socket\+Descriptor, }
+\item[{uint8\+\_\+t $\ast$}]{buffer, }
+\item[{const size\+\_\+t}]{buffer\+Length, }
+\item[{const unsigned int}]{timeout = {\ttfamily 10}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_t_c_p_ae120ce7abfcd5eb5bccec7960e84ea4b}{}\label{class_t_c_p_ae120ce7abfcd5eb5bccec7960e84ea4b}
+
+
+Receive data from a socket. 
+
+Receive the data from a descriptor and stores its content on the desired buffer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\+Descriptor} & The socket descriptor. \\
+\hline
+{\em buffer} & The buffer to store the data. \\
+\hline
+{\em buffer\+Length} & The size of the buffer. \\
+\hline
+{\em int} & The timeout for the socket.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The socket response. 
+\end{DoxyReturn}
+\index{T\+CP@{T\+CP}!send\+Data@{send\+Data}}
+\index{send\+Data@{send\+Data}!T\+CP@{T\+CP}}
+\subsubsection[{\texorpdfstring{send\+Data(const int socket\+Descriptor, const uint8\+\_\+t $\ast$buffer, const size\+\_\+t buffer\+Length)}{sendData(const int socketDescriptor, const uint8_t *buffer, const size_t bufferLength)}}]{\setlength{\rightskip}{0pt plus 5cm}static int T\+C\+P\+::send\+Data (
+\begin{DoxyParamCaption}
+\item[{const int}]{socket\+Descriptor, }
+\item[{const uint8\+\_\+t $\ast$}]{buffer, }
+\item[{const size\+\_\+t}]{buffer\+Length}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_t_c_p_a2508bd0dafeb820da51b07ecdf1627f9}{}\label{class_t_c_p_a2508bd0dafeb820da51b07ecdf1627f9}
+
+
+Send data from a socket. 
+
+Send data from a descriptor.
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\+Descriptor} & The socket to send the data. \\
+\hline
+{\em buffer} & The data to send. \\
+\hline
+{\em buffer\+Length} & The size of the data.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The socket response. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{_t_c_p_8h}{T\+C\+P.\+h}\end{DoxyCompactItemize}

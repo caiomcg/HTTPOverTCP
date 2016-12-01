@@ -3,7 +3,7 @@
  * 
  * @class TCP
  *
- * @brief TCP connection manager
+ * @brief TCP connection manager.
  *        
  * This Class is responsible for creating and managing TCP connections
  * for clients and servers.

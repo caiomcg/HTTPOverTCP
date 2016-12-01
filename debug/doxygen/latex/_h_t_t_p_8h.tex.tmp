@@ -1,0 +1,59 @@
+\hypertarget{_h_t_t_p_8h}{}\section{include/\+H\+T\+TP.h File Reference}
+\label{_h_t_t_p_8h}\index{include/\+H\+T\+T\+P.\+h@{include/\+H\+T\+T\+P.\+h}}
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$regex$>$}\\*
+{\ttfamily \#include $<$functional$>$}\\*
+{\ttfamily \#include $<$fstream$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$ctime$>$}\\*
+{\ttfamily \#include $<$cstdio$>$}\\*
+{\ttfamily \#include $<$cstring$>$}\\*
+{\ttfamily \#include \char`\"{}../include/\+Utils.\+h\char`\"{}}\\*
+Include dependency graph for H\+T\+T\+P.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_h_t_t_p}{H\+T\+TP}
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_h_t_t_p}{H\+T\+TP} packet creator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define {\bfseries M\+A\+X\+\_\+\+S\+I\+ZE}~1024000\hypertarget{_h_t_t_p_8h_a0592dba56693fad79136250c11e5a7fe}{}\label{_h_t_t_p_8h_a0592dba56693fad79136250c11e5a7fe}
+
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{_h_t_t_p_8h_a01340bcc9cce6aa1d156bd0468c708fc}{H\+T\+T\+P\+Status} \{ \\*
+{\bfseries OK} =200, 
+{\bfseries P\+A\+R\+T\+I\+A\+L\+\_\+\+C\+O\+N\+T\+E\+NT} =206, 
+{\bfseries F\+O\+U\+ND} = 302, 
+{\bfseries N\+O\+T\+\_\+\+M\+O\+D\+I\+F\+I\+ED} = 304, 
+\\*
+{\bfseries T\+E\+M\+P\+O\+R\+A\+R\+Y\+\_\+\+R\+E\+D\+I\+R\+E\+CT} = 307, 
+{\bfseries B\+A\+D\+\_\+\+R\+E\+Q\+U\+E\+ST} = 400, 
+{\bfseries U\+N\+A\+U\+T\+H\+O\+R\+I\+Z\+ED} = 401, 
+{\bfseries F\+O\+R\+B\+I\+D\+D\+EN} = 403, 
+\\*
+{\bfseries N\+O\+T\+\_\+\+F\+O\+U\+ND} = 404, 
+{\bfseries I\+N\+T\+E\+R\+N\+A\+L\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+E\+R\+R\+OR} = 500, 
+{\bfseries N\+O\+T\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+TD} = 501, 
+{\bfseries S\+E\+R\+V\+I\+C\+E\+\_\+\+U\+N\+A\+V\+E\+I\+L\+A\+B\+LE} = 503, 
+\\*
+{\bfseries P\+E\+R\+M\+I\+S\+S\+I\+O\+N\+\_\+\+D\+E\+N\+I\+ED} = 550
+ \}\begin{DoxyCompactList}\small\item\em \hyperlink{class_h_t_t_p}{H\+T\+TP} status. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+
+
+\subsection{Enumeration Type Documentation}
+\index{H\+T\+T\+P.\+h@{H\+T\+T\+P.\+h}!H\+T\+T\+P\+Status@{H\+T\+T\+P\+Status}}
+\index{H\+T\+T\+P\+Status@{H\+T\+T\+P\+Status}!H\+T\+T\+P.\+h@{H\+T\+T\+P.\+h}}
+\subsubsection[{\texorpdfstring{H\+T\+T\+P\+Status}{HTTPStatus}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf H\+T\+T\+P\+Status}}\hypertarget{_h_t_t_p_8h_a01340bcc9cce6aa1d156bd0468c708fc}{}\label{_h_t_t_p_8h_a01340bcc9cce6aa1d156bd0468c708fc}
+
+
+\hyperlink{class_h_t_t_p}{H\+T\+TP} status. 
+
+A set of possible status for the server. 

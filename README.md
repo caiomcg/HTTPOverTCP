@@ -19,14 +19,14 @@ A C++ implementation of the HTTP protocol over TCP under Unix environment.
 ```
 $> git clone https://github.com/caiomcg/HTTPOverTCP.git
 $> cd debug
-$> make all
+$> make all VERBOSE=true
 ```
 
 ## Execution Instructions ##
 * Move to the debug folder.
-* Run the created executable file and type the input.
+* Run the created executable file followed by the desired port.
 
 ```
 $> cd debug
-$> ./main
+$> ./WebServer 8888
 ```
