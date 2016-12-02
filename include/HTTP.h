@@ -121,7 +121,7 @@ private:
 	 * 
 	 * @return The date as a string.
 	 */
-	std::string httpDate();
+	std::string httpDate() const;
 
 public:
 	/**

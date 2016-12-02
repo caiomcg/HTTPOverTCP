@@ -71,7 +71,7 @@ std::string HTTP::findPath(std::string& in, std::string message) {
 	return result;
 }
 
-std::string HTTP::httpDate(){
+std::string HTTP::httpDate() const {
 	time_t now = time(0);
 	char buf[300];
 	struct tm tm = *gmtime(&now);

@@ -1,6 +1,6 @@
 #include "../include/WebServer.h"
 
-WebServer::WebServer(const std::string serverName, const int port) : _tcp(nullptr), _keepListening(false) {
+WebServer::WebServer(const std::string serverName, const int port) : _tcp(nullptr), keepListening(false) {
 	this->_tcp = new TCP(SocketFamily::IPV4, SocketUser::SERVER, port);
 }
 
@@ -12,13 +12,13 @@ WebServer::~WebServer() {
 }
 
 void WebServer::run() {
-	this->_keepListening = true;
+	this->keepListening = true;
 	int client = 0;
 
 	if (!_tcp->listenTo()) {
 		Utils::verbose("INFO", "Socket is listening at port: " + std::to_string(_tcp->getPort()));
 
-		while (_keepListening) {
+		while (keepListening) {
 			if ((client = _tcp->acceptConnection()) >= 0) {
 				Utils::verbose("INFO", "Accepted connection");
 				std::thread(&WebServer::prepareClient, this, client).detach();

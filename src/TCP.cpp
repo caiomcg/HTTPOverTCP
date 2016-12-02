@@ -26,7 +26,7 @@ TCP::TCP(SocketFamily family, SocketUser user, const int port, const int maxClie
 }
 
 TCP::~TCP() {
-
+	closeSocket();
 }
 
 int TCP::createSocket(SocketFamily family, SocketUser user) {
@@ -73,7 +73,7 @@ int TCP::getPort() const {
 	return port;
 }
 
-bool TCP::closeWithIdentifier(const int identifier){
+bool TCP::closeWithIdentifier(const int identifier) {
 	int response = 0;
 	if ((response = close(identifier)) < 0) {
 		Utils::verbose("ERROR", "Could not close socket");

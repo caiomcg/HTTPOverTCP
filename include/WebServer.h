@@ -59,9 +59,8 @@ class WebServer {
 private:
 	TCP* _tcp; // TCP instance.
 
-	bool _keepListening; // Keep the server running.
-
 public:
+	bool keepListening; // Keep the server running.
 	/**
 	 * @brief Server constructor.
 	 * @details Initiates the server and calls the TCP constructor.
